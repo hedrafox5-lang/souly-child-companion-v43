@@ -20,7 +20,7 @@ jobs:
           if [ ! -f "app/build.gradle.kts" ]; then
             ZIP_FILE=$(ls *.zip | head -n 1)
             echo "Extracting $ZIP_FILE ..."
-            unzip -q -o "$ZIP_FILE"
+            unzip -q -o "$ZIP_FILE" -x ".github/*"
             git config user.name "Souly Auto Builder"
             git config user.email "builder@soulyeg.online"
             git add .
@@ -34,13 +34,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Android SDK 35
-        uses: android-actions/setup-android@v3
-
       - name: Install Android 15 (API 35) Platform & Build-Tools
         run: |
-          yes | sdkmanager --licenses || true
-          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          SDKMANAGER=$(ls ${ANDROID_HOME}/cmdline-tools/*/bin/sdkmanager | tail -n 1)
+          yes | "$SDKMANAGER" --licenses > /dev/null || true
+          "$SDKMANAGER" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
       - name: Generate Release Keystore
         run: |
@@ -56,7 +54,7 @@ jobs:
               -dname "CN=Souly Digital Citadel, OU=Parental Hub, O=Souly, L=Cairo, S=Cairo, C=EG"
           fi
 
-      - name: Setup Gradle 8.7 & Build APKs
+      - name: Setup Gradle 8.7
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
@@ -69,6 +67,7 @@ jobs:
           cp app/build/outputs/apk/legacyApi26To29/release/app-legacyApi26To29-release.apk dist-apk/Souly-Child-Companion-v4.3-Android8-to-10.apk
           cp app/build/outputs/apk/modernApi30To33/release/app-modernApi30To33-release.apk dist-apk/Souly-Child-Companion-v4.3-Android11-to-13.apk
           cp app/build/outputs/apk/nextGenApi34To35/release/app-nextGenApi34To35-release.apk dist-apk/Souly-Child-Companion-v4.3-Android14-to-15.apk
+          ls -lh dist-apk/
 
       - name: Upload Compiled APKs
         uses: actions/upload-artifact@v4
