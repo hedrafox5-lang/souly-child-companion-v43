@@ -1,0 +1,78 @@
+name: Auto-Unzip & Build Souly v4.3 APKs
+
+"on":
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Auto-Extract ZIP Archive into Repository
+        run: |
+          if [ ! -f "app/build.gradle.kts" ]; then
+            ZIP_FILE=$(ls *.zip | head -n 1)
+            echo "Extracting $ZIP_FILE ..."
+            unzip -q -o "$ZIP_FILE"
+            git config user.name "Souly Auto Builder"
+            git config user.email "builder@soulyeg.online"
+            git add .
+            git commit -m "Auto-extract project folders from ZIP" || true
+            git push || true
+          fi
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK 35
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android 15 (API 35) Platform & Build-Tools
+        run: |
+          yes | sdkmanager --licenses || true
+          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Generate Release Keystore
+        run: |
+          if [ ! -f app/souly-release-key.jks ]; then
+            keytool -genkeypair -v \
+              -keystore app/souly-release-key.jks \
+              -alias souly_shield_key \
+              -keyalg RSA \
+              -keysize 2048 \
+              -validity 10000 \
+              -storepass SoulyShield2026 \
+              -keypass SoulyShield2026 \
+              -dname "CN=Souly Digital Citadel, OU=Parental Hub, O=Souly, L=Cairo, S=Cairo, C=EG"
+          fi
+
+      - name: Setup Gradle 8.7 & Build APKs
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Compile All 4 Release APKs
+        run: |
+          gradle assembleRelease --stacktrace
+          mkdir -p dist-apk
+          cp app/build/outputs/apk/universalApi26To35/release/app-universalApi26To35-release.apk dist-apk/Souly-Child-Companion-v4.3-Universal-Android8-to-15.apk
+          cp app/build/outputs/apk/legacyApi26To29/release/app-legacyApi26To29-release.apk dist-apk/Souly-Child-Companion-v4.3-Android8-to-10.apk
+          cp app/build/outputs/apk/modernApi30To33/release/app-modernApi30To33-release.apk dist-apk/Souly-Child-Companion-v4.3-Android11-to-13.apk
+          cp app/build/outputs/apk/nextGenApi34To35/release/app-nextGenApi34To35-release.apk dist-apk/Souly-Child-Companion-v4.3-Android14-to-15.apk
+
+      - name: Upload Compiled APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: Souly-Child-Companion-v4.3-APK-All-Editions
+          path: dist-apk/*.apk
+          retention-days: 60
