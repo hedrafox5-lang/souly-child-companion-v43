@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/obsidian_bg"
+    android:fillViewport="true"
+    android:layoutDirection="rtl">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_emerald"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_shield_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="درع سولي للرعاية الرقمية العائلية v4.3"
+                android:textColor="@color/text_white"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="امسح رمز الـ QR من لوحة تحكم ولي الأمر أو أدخل كود الربط المشفر"
+                android:textColor="@color/text_muted"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/qrScannerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_card_emerald"
+            android:padding="8dp">
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/cameraPreviewView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tvScannerOverlayHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:background="#AA041512"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:text="وجّه الكاميرا نحو رمز الـ QR للربط التلقائي"
+                android:textColor="@color/emerald_bright"
+                android:textSize="12sp" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/pairingFormContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_card_emerald"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="رابط السيرفر الرئيسي (Souly Hub URL):"
+                android:textColor="@color/text_muted"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etServerUrl"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="6dp"
+                android:background="#041512"
+                android:hint="https://soulyeg.online"
+                android:inputType="textUri"
+                android:paddingHorizontal="14dp"
+                android:text="https://soulyeg.online"
+                android:textColor="@color/text_white"
+                android:textColorHint="@color/text_muted"
+                android:textDirection="ltr"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="كود الربط المشفر (Pairing Code):"
+                android:textColor="@color/text_muted"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etPairingCode"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="#041512"
+                android:hint="SOULY-XXXX-1234"
+                android:inputType="textCapCharacters"
+                android:paddingHorizontal="14dp"
+                android:textColor="@color/emerald_bright"
+                android:textColorHint="@color/text_muted"
+                android:textDirection="ltr"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="تسمية الهاتف أو الطفل (اختياري — يُستخدم موديل الجهاز تلقائياً عند تركه فارغاً):"
+                android:textColor="@color/text_muted"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etChildName"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="6dp"
+                android:background="#041512"
+                android:hint="اتركه فارغاً لاستخدام اسم طراز الهاتف تلقائياً"
+                android:inputType="textPersonName"
+                android:paddingHorizontal="14dp"
+                android:textColor="@color/text_white"
+                android:textColorHint="@color/text_muted"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnPairDeviceNow"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="14dp"
+                android:backgroundTint="@color/emerald_primary"
+                android:text="🔗 ربط الهاتف وتفعيل الحماية الآن"
+                android:textColor="@color/obsidian_bg"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPairingStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="حالة الربط: في انتظار مسح الـ QR أو إدخال الكود"
+                android:textColor="@color/amber_warning"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_card_emerald"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvPermissionsSummaryHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚙️ حالة صلاحيات النظام العشر (اضغط لتفعيل أي صلاحية متبقية):"
+                android:textColor="@color/text_white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnGrantLocation"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/obsidian_surface"
+                android:text="📍 1. الموقع الجغرافي بالخلفية والإشعارات"
+                android:textColor="@color/emerald_bright"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnGrantUsageStats"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="6dp"
+                android:backgroundTint="@color/obsidian_surface"
+                android:text="📊 2. إحصائيات وقت استخدام التطبيقات (Usage Stats)"
+                android:textColor="@color/emerald_bright"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnGrantOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="6dp"
+                android:backgroundTint="@color/obsidian_surface"
+                android:text="🪟 3. الظهور فوق التطبيقات وشاشة التوقف العائلي"
+                android:textColor="@color/emerald_bright"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnGrantDeviceAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="6dp"
+                android:backgroundTint="@color/obsidian_surface"
+                android:text="🛡️ 4. مسؤول حماية الجهاز وفلترة المكالمات"
+                android:textColor="@color/emerald_bright"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnGrantVpnDns"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="6dp"
+                android:backgroundTint="@color/obsidian_surface"
+                android:text="🌐 5. درع الـ DNS العائلي ومشاركة لقطات الشاشة"
+                android:textColor="@color/emerald_bright"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnGrantAccessibility"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="6dp"
+                android:backgroundTint="@color/obsidian_surface"
+                android:text="♿ 6. خدمة إمكانية الوصول (Accessibility) لتنظيم التطبيقات"
+                android:textColor="@color/emerald_bright"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnGrantNotificationListener"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="6dp"
+                android:backgroundTint="@color/obsidian_surface"
+                android:text="🔔 7. قارئ تنبيهات تطبيقات التواصل للسلامة العائلية"
+                android:textColor="@color/emerald_bright"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnGrantTelephonyContacts"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="6dp"
+                android:backgroundTint="@color/obsidian_surface"
+                android:text="📞 8. سجل المكالمات والرسائل وجهات الاتصال"
+                android:textColor="@color/emerald_bright"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnGrantCameraMic"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="6dp"
+                android:backgroundTint="@color/obsidian_surface"
+                android:text="🎥 9. الكاميرا والميكروفون للاطمئنان العائلي المباشر"
+                android:textColor="@color/emerald_bright"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnGrantMediaStorage"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="6dp"
+                android:backgroundTint="@color/obsidian_surface"
+                android:text="🖼️ 10. الوسائط والصور للنسخ الاحتياطي الآمن"
+                android:textColor="@color/emerald_bright"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnOpenAppDetailsRestrictedSettings"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#1E293B"
+                android:text="🔓 فتح إعدادات التطبيق (لتفعيل الإعدادات المقيدة في أندرويد 13–15)"
+                android:textColor="@color/amber_warning"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
